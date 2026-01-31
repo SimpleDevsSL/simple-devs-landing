@@ -5,6 +5,7 @@ import { Win98Window } from "@/components/win98-window"
 import confetti from "canvas-confetti"
 import { CakeIcon } from "@/components/desktop-icons"
 
+// note: this component is not dinamic, desp se podria hacerlo para el resto de cumpleaños jajaja
 interface BirthdayWindowProps {
   isOpen: boolean
   onClose: () => void
