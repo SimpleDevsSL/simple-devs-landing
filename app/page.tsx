@@ -256,7 +256,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-2 pt-1 border-t border-[#808080] text-xs text-[#808080]" style={{ fontFamily: "var(--font-pixel), 'MS Sans Serif', sans-serif" }}>
-                  4 objeto(s) | 2.4 KB
+                  {projects.length} objeto(s) | 2.4 KB
                 </div>
               </div>
             </Win98Window>
