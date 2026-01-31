@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react"
 import { Win98Window } from "@/components/win98-window"
 import { Win98Taskbar } from "@/components/win98-taskbar"
-import { DesktopIcon, FolderIcon, TextFileIcon, ComputerIcon, MailIcon, CodeIcon } from "@/components/desktop-icons"
+import { DesktopIcon, FolderIcon, TextFileIcon, ComputerIcon, MailIcon, CodeIcon, CakeIcon } from "@/components/desktop-icons"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Win98Shutdown } from "@/components/win98-shutdown"
+import { BirthdayWindow } from "@/components/birthday-window"
+import confetti from "canvas-confetti"
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -17,12 +19,33 @@ export default function Home() {
     readme: { id: 'readme', title: 'Leeme.txt - Bloc de notas', isOpen: true, isMinimized: false, zIndex: 1, icon: <TextFileIcon /> },
     projects: { id: 'projects', title: 'A:\\Proyectos', isOpen: true, isMinimized: false, zIndex: 2, icon: <FolderIcon /> },
     connect: { id: 'connect', title: 'Contacto.exe - Outlook Express', isOpen: true, isMinimized: false, zIndex: 3, icon: <MailIcon /> },
+    birthday: { id: 'birthday', title: '¡Feliz Cumpleaños!', isOpen: false, isMinimized: false, zIndex: 4, icon: <CakeIcon /> },
   }
 
   const [windows, setWindows] = useState<Record<string, typeof initialWindows.readme>>(initialWindows)
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100)
+    
+    // Check for birthday
+    const today = new Date()
+    // Month is 0-indexed (0 = January)
+    if (today.getMonth() === 0 && today.getDate() === 31) {
+        setWindows(prev => ({
+            ...prev,
+            birthday: { ...prev.birthday, isOpen: true }
+        }))
+        // Initial confetti burst
+        setTimeout(() => {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                zIndex: 9999,
+            });
+        }, 1000)
+    }
+
     return () => clearTimeout(timer)
   }, [])
 
@@ -325,6 +348,18 @@ export default function Home() {
                 </div>
               </div>
             </Win98Window>
+          )}
+
+          {windows.birthday.isOpen && (
+            <BirthdayWindow
+              isOpen={windows.birthday.isOpen}
+              zIndex={windows.birthday.zIndex}
+              isActive={windows.birthday.zIndex === Math.max(...Object.values(windows).filter(w => !w.isMinimized && w.isOpen).map(w => w.zIndex))}
+              isMinimized={windows.birthday.isMinimized}
+              onFocus={() => bringToFront('birthday')}
+              onClose={() => handleClose('birthday')}
+              onMinimize={() => handleMinimize('birthday')}
+            />
           )}
         </div>
       </main>
