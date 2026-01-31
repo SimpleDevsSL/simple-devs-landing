@@ -97,3 +97,15 @@ export function CodeIcon() {
     </svg>
   )
 }
+
+export function CakeIcon() {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="drop-shadow-sm">
+      <rect x="6" y="14" width="20" height="12" fill="#f0e68c" stroke="#000" strokeWidth="1"/>
+      <rect x="6" y="18" width="20" height="2" fill="#d2691e"/>
+      <rect x="6" y="14" width="20" height="4" fill="#fffacd" stroke="#000" strokeWidth="1"/>
+      <rect x="15" y="6" width="2" height="8" fill="#ff69b4" stroke="#000" strokeWidth="1"/>
+      <circle cx="16" cy="6" r="2" fill="#ff4500"/>
+    </svg>
+  )
+}
